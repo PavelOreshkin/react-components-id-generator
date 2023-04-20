@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "description",
   "main": "index.js",
+  "bin": {
+    "add-id-to-elements": "./cli.js"
+  },
   "scripts": {
     "test": "test"
   },
@@ -14,5 +17,8 @@
     "test"
   ],
   "author": "Pavel Oreshkin",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0"
+  }
 }
