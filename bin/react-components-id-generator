@@ -1,4 +1,6 @@
-const { addIdsToFile } = require("./index");
+#!/usr/bin/env node
+
+const { addIdsToFile } = require("../index");
 
 const args = process.argv.slice(2);
 
