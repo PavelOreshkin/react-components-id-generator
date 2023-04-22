@@ -1,10 +1,10 @@
 {
   "name": "react-components-id-generator",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "description",
   "main": "index.js",
   "bin": {
-    "react-components-id-generator": "./cli.js"
+    "react-components-id-generator": "./bin/react-components-id-generator"
   },
   "scripts": {
     "test": "test"
@@ -19,9 +19,10 @@
   "author": "Pavel Oreshkin",
   "license": "MIT",
   "dependencies": {
+    "acorn": "^8.8.2",
+    "acorn-jsx": "^5.3.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "acorn-jsx": "^5.3.2"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
