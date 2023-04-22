@@ -26,8 +26,12 @@ const transformedCode = babel.transformSync(code, {
       {
         transforms: [{
           transform: function (code, file) {
+            console.log('code: ', code);
+            console.log('file: ', file);
             const elements = eval(code);
+            console.log('elements: ', elements);
             const newElements = addIdToElements(program.id, elements);
+            console.log('newElements: ', newElements);
             return react.createElement(react.Fragment, null, newElements);
           }
         }]
