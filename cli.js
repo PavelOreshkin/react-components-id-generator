@@ -1,4 +1,6 @@
+console.log('111');
 const { addIdsToFile } = require("./index");
+console.log('222');
 
 const args = process.argv.slice(2);
 
