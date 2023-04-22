@@ -1,45 +1,20 @@
-const { program } = require('commander');
-const { addIdToElements } = require('./index');
+const { addIdsToFile } = require("./index");
 
-program
-  .option('-p, --path <path>', 'Path to the file with React components')
-  .option('-i, --id <id>', 'ID prefix for elements')
-  .parse(process.argv);
+const args = process.argv.slice(2);
 
-if (!program.path || !program.id) {
-  console.error('Please provide path to the file with React components and ID prefix for elements');
+if (args.length === 0) {
+  console.error("Usage: npx react-components-id-generator <path>");
   process.exit(1);
 }
 
-const fs = require('fs');
-const path = require('path');
-const babel = require('@babel/core');
-const react = require('react');
+const filePath = args[0];
 
-const code = fs.readFileSync(path.resolve(program.path), 'utf-8');
+console.log(`Adding IDs to file ${filePath}...`);
 
-const transformedCode = babel.transformSync(code, {
-  presets: ['@babel/preset-react'],
-  plugins: [
-    [
-      'babel-plugin-react-transform',
-      {
-        transforms: [{
-          transform: function (code, file) {
-            console.log('code: ', code);
-            console.log('file: ', file);
-            const elements = eval(code);
-            console.log('elements: ', elements);
-            const newElements = addIdToElements(program.id, elements);
-            console.log('newElements: ', newElements);
-            return react.createElement(react.Fragment, null, newElements);
-          }
-        }]
-      }
-    ]
-  ]
-});
-
-fs.writeFileSync(path.resolve(program.path), transformedCode.code, 'utf-8');
-
-console.log(`ID prefix ${program.id} added to elements in ${program.path}`);
+try {
+  addIdsToFile(filePath);
+  console.log(`IDs added to file ${filePath}.`);
+} catch (error) {
+  console.error(`Error adding IDs to file ${filePath}:`, error);
+  process.exit(1);
+}

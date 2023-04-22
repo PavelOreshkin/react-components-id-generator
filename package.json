@@ -4,7 +4,7 @@
   "description": "description",
   "main": "index.js",
   "bin": {
-    "add-id-to-elements": "./cli.js"
+    "react-components-id-generator": "./cli.js"
   },
   "scripts": {
     "test": "test"
@@ -18,7 +18,14 @@
   ],
   "author": "Pavel Oreshkin",
   "license": "MIT",
-  "dependencies": {
-    "react": "^18.2.0"
+  "dependencies": {},
+  "devDependencies": {
+    "acorn": "^8.8.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^9.1.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
