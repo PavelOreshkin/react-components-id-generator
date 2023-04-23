@@ -1,6 +1,6 @@
 {
   "name": "react-components-id-generator",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "description",
   "main": "index.js",
   "bin": {
@@ -29,6 +29,9 @@
   "devDependencies": {
     "@babel/generator": "^7.21.4",
     "@babel/plugin-syntax-jsx": "^7.21.4",
+    "@babel/plugin-transform-react-jsx": "^7.21.0",
+    "@babel/plugin-transform-typescript": "^7.21.3",
+    "@babel/traverse": "^7.21.4",
     "babel-core": "^6.26.3",
     "babel-loader": "^9.1.2",
     "babel-preset-env": "^1.7.0",
