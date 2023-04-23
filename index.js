@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const { parseJSX } = require('./acorn');
+const traverse = require('traverse');
+const astring = require('astring');
+const generator = require('@babel/generator').default;
 
 function addIdsToElement(node, componentName) {
   const elementType = node.openingElement.name.name;
@@ -83,15 +86,16 @@ function addIdsToFile(filePath) {
   console.log('> ast 2: ', ast);
 
   // Generate new code from modified AST
-  // const newCode = astring.generate(ast, {
-  //   comments: true,
-  // });
-  const newCode = code.slice(0, ast.start) + code.slice(ast.start, ast.end).replace(/\s/g, '') + code.slice(ast.end);
-  // const newCode = '123';
+  const newCodeAstring = astring.generate(ast, {
+    comments: true,
+  });
   console.log('> newCode: ', newCode);
 
+  const newCodeBable = generator(ast, options).code;
+  console.log('> newCodeBable: ', newCodeBable);
+
   // Write new code to file
-  fs.writeFileSync(filePath, newCode, 'utf8');
+  fs.writeFileSync(filePath, newCodeBable, 'utf8');
 }
 
 module.exports = { addIdsToFile };
