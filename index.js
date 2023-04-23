@@ -46,9 +46,9 @@ function addIdsToComponent(componentNode) {
   return elements;
 }
 
-function addIdsToFile(filePath) {
+function addIdsToFile1(filePath) {
   const code = fs.readFileSync(filePath, { encoding: 'utf-8' });
-  const ast = parse(code, { sourceType: 'module', ecmaVersion: 2021 });
+  const ast = parseJSX(code);
   const components = ast.body.filter((node) => node.type === 'FunctionDeclaration');
 
   components.forEach((componentNode) => {
@@ -65,6 +65,33 @@ function addIdsToFile(filePath) {
   });
 
   console.log(`Added ids to ${components.length} components in ${filePath}`);
+}
+
+function addIdsToFile(filePath) {
+  // Read file content
+  const code = fs.readFileSync(filePath, { encoding: 'utf-8' });
+  console.log('> code: ', code);
+
+  // Parse code into AST
+  const ast = parseJSX(code);
+  console.log('> ast 1: ', ast);
+
+  // Traverse AST and modify the button element
+  traverse(ast, {
+    JSXOpeningElement: addIdToButton,
+  });
+  console.log('> ast 2: ', ast);
+
+  // Generate new code from modified AST
+  // const newCode = astring.generate(ast, {
+  //   comments: true,
+  // });
+  const newCode = code.slice(0, ast.start) + code.slice(ast.start, ast.end).replace(/\s/g, '') + code.slice(ast.end);
+  // const newCode = '123';
+  console.log('> newCode: ', newCode);
+
+  // Write new code to file
+  fs.writeFileSync(filePath, newCode, 'utf8');
 }
 
 module.exports = { addIdsToFile };
