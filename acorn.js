@@ -1,7 +1,18 @@
-const acorn = require('acorn-jsx');
+var acorn = require("acorn");
+var jsx = require("acorn-jsx");
 
-function parse(code) {
-  return acorn.parse(code, { sourceType: 'module', plugins: { jsx: true } });
+function parseJSX(code) {
+
+  const options = {
+    ecmaVersion: 'latest',
+    sourceType: "module",
+    plugins: {
+      jsx: true,
+      typescript: true 
+    },
+  };
+
+  return acorn.Parser.extend(jsx()).parse(code, options);
 }
 
-module.exports = { parse };
+module.exports = { parseJSX };

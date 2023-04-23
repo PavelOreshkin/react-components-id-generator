@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { parse } = require('./acorn');
+const { parseJSX } = require('./acorn');
 
 function addIdsToElement(node, componentName) {
   const elementType = node.openingElement.name.name;
