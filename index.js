@@ -5,6 +5,9 @@ const { babelParseJSX } = require('./babel');
 const traverse = require('traverse');
 const astring = require('astring');
 const generator = require('@babel/generator').default;
+const babel = require('@babel/core');
+const { parse } = require('@babel/parser');
+// const traverse = require('@babel/traverse');
 
 // function addIdsToElement(node, componentName) {
 //   const elementType = node.openingElement.name.name;
@@ -99,31 +102,45 @@ function addIdsToFile(filePath) {
 
   const astBabel = babelParseJSX(code);
   console.log('astBabel: ', astBabel);
+  console.log('program: ', astBabel.program);
 
   // Traverse AST and modify the button element
-  traverse(ast, {
+  traverse(astBabel.program, {
     JSXOpeningElement: addIdToButton,
   });
   console.log('> ast 2: ', ast);
 
   // Generate new code from modified AST
-  const newCodeAstring = astring.generate(ast, {
-    comments: true,
-  });
-  console.log('> newCode: ', newCode);
+  // const newCodeAstring = astring.generate(ast, {
+  //   comments: true,
+  // });
+  // console.log('> newCode: ', newCode);
 
   const options = {
     retainLines: true, // сохранение форматирования
     comments: true, // сохранение комментариев
     sourceType: 'module',
+    concise: false,
     plugins: ['jsx'],
   }
 
-  const newCodeBable = generator(ast, options).code;
+  const newCodeBable = generator(astBabel, options).code;
   console.log('> newCodeBable: ', newCodeBable);
 
+  const newAst = parse(code, {
+    plugins: ['jsx']
+  });
+  console.log('> newAst: ', newAst);
+
+  const newCode = generate(ast, {
+    retainLines: true,
+    quotes: 'double',
+    concise: false
+  }).code;
+  console.log('> newCode: ', newCode);
+
   // Write new code to file
-  fs.writeFileSync(filePath, newCodeBable, 'utf8');
+  // fs.writeFileSync(filePath, newCodeBable, 'utf8');
 }
 
 module.exports = { addIdsToFile };
