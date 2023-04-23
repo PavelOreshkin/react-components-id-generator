@@ -91,6 +91,13 @@ function addIdsToFile(filePath) {
   });
   console.log('> newCode: ', newCode);
 
+  const options = {
+    retainLines: true, // сохранение форматирования
+    comments: true, // сохранение комментариев
+    sourceType: 'module',
+    plugins: ['jsx'],
+  }
+
   const newCodeBable = generator(ast, options).code;
   console.log('> newCodeBable: ', newCodeBable);
 
