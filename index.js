@@ -7,6 +7,7 @@ const astring = require('astring');
 const generator = require('@babel/generator').default;
 const babel = require('@babel/core');
 const { parse } = require('@babel/parser');
+
 // const traverse = require('@babel/traverse');
 
 // function addIdsToElement(node, componentName) {
@@ -97,19 +98,19 @@ function addIdsToFile(filePath) {
   console.log('> code: ', code);
 
   // Parse code into AST
-  const ast = parseJSX(code);
-  console.log('> ast 1: ', ast);
+  // const ast = parseJSX(code);
+  const ast = babelParseJSX(code);
 
-  const astBabel = babelParseJSX(code);
-  console.log('astBabel: ', astBabel);
-  console.log('program: ', astBabel.program);
 
+  // НЕ ФАКТО ЧТО РАБОАЕТ
+  // ЗАМЕНИТЬ НА @babel/traverse
+  // МОДУЛЬ УЖЕ УСТАНОВЛЕН
   // Traverse AST and modify the button element
-  traverse(astBabel.program, {
+  traverse(ast, {
     JSXOpeningElement: addIdToButton,
   });
-  console.log('> ast 2: ', ast);
 
+  // НЕ РАБОТАЕТ
   // Generate new code from modified AST
   // const newCodeAstring = astring.generate(ast, {
   //   comments: true,
@@ -124,23 +125,24 @@ function addIdsToFile(filePath) {
     plugins: ['jsx'],
   }
 
-  const newCodeBable = generator(astBabel, options).code;
+  // генератор работает, но генерирует не совсем верно, ниже генератор лучше
+  const newCodeBable = generator(ast, options, code).code;
   console.log('> newCodeBable: ', newCodeBable);
 
-  const newAst = parse(code, {
-    plugins: ['jsx']
-  });
-  console.log('> newAst: ', newAst);
 
-  const newCode = generate(ast, {
-    retainLines: true,
-    quotes: 'double',
-    concise: false
-  }).code;
-  console.log('> newCode: ', newCode);
 
+  // этот генератор работает лучше, чуть чуть поправить стили
+    console.log('111');
+    // const astX = parse(jsxCode, { plugins: ['jsx'] });
+    const astX = parse(code, { sourceType: "module", retainLines: true, comments: true, plugins: ['jsx'] });
+    console.log('222');
+    const output = generator(astX, options, code);
+    console.log('333: ', output.code);
+
+
+  // РАБОТАЕТ
   // Write new code to file
-  // fs.writeFileSync(filePath, newCodeBable, 'utf8');
+  fs.writeFileSync(filePath, output.code, 'utf8');
 }
 
 module.exports = { addIdsToFile };
