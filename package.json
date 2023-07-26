@@ -1,7 +1,7 @@
 {
   "name": "react-components-id-generator",
-  "version": "0.0.15",
-  "description": "description",
+  "version": "0.0.16",
+  "description": "package for generating IDs by config to help with auto testing",
   "bin": {
     "react-components-id-generator": "./bin/react-components-id-generator"
   },
@@ -20,13 +20,6 @@
   "dependencies": {
     "@babel/generator": "^7.21.4",
     "@babel/parser": "^7.21.4",
-    "@babel/plugin-syntax-jsx": "^7.21.4",
-    "@babel/plugin-transform-react-jsx": "^7.21.0",
-    "@babel/plugin-transform-typescript": "^7.21.3",
-    "@babel/traverse": "^7.21.4",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^9.1.2",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1"
+    "@babel/traverse": "^7.21.4"
   }
 }
