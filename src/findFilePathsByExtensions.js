@@ -24,17 +24,17 @@ function findFilePathsByExtensions(paths, extensions) {
     });
   }
 
-  paths.forEach((path) => {
-    const isDirectory = fs.statSync(path).isDirectory();
+  paths.forEach((item) => {
+    const isDirectory = fs.statSync(item).isDirectory();
 
     if (isDirectory) {
       // Recursive call to traverse subfolders
-      traverse(path);
+      traverse(item);
     } else {
-      const fileExtension = path.extname(path);
+      const fileExtension = path.extname(item);
 
       if (extensions.includes(fileExtension)) {
-        files.push(path);
+        files.push(item);
       }
     }
   });
