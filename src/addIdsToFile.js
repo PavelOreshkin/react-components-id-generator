@@ -11,7 +11,7 @@ const { setId } = require('../src/setId');
 
 function addIdsToFile({ filePath, config }) {
   const code = fs.readFileSync(filePath, { encoding: 'utf-8' });
-  const ast = parse(code, { sourceType: "module", retainLines: true, comments: true, plugins: ['jsx'] });
+  const ast = parse(code, { sourceType: "module", presets: ['@babel/preset-typescript'], plugins: ['jsx'] });
 
   // get component name
   const componentName = findComponentNameByAst(ast);
