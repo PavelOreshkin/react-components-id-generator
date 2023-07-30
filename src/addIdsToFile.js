@@ -1,7 +1,5 @@
 const fs = require('fs');
-const path = require('path');
 const generator = require('@babel/generator').default;
-const babel = require('@babel/core');
 const { parse } = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 const { findComponentNameByAst } = require('../src/findComponentNameByAst');
@@ -11,7 +9,7 @@ const { setId } = require('../src/setId');
 
 function addIdsToFile({ filePath, config }) {
   const code = fs.readFileSync(filePath, { encoding: 'utf-8' });
-  const ast = parse(code, { sourceType: "module", presets: ['@babel/preset-typescript'], plugins: ['jsx'] });
+  const ast = parse(code, { sourceType: "module", plugins: ['jsx', 'typescript'] });
 
   // get component name
   const componentName = findComponentNameByAst(ast);
