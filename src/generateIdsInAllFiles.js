@@ -9,9 +9,9 @@ async function generateIdsInAllFiles({ files, parsedConfig }) {
     }
     try {
       addIdsToFile({ filePath, config: parsedConfig });
-      print("IDs added to file ${filePath}.", "green")
+      print(`IDs added to file ${filePath}.`, "green")
     } catch (error) {
-      print("Error adding IDs to file ${filePath}:", "red")
+      print(`Error adding IDs to file ${filePath}:`, "red")
       print(error)
     }
   }))
