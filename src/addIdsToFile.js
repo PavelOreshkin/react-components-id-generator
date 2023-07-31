@@ -42,10 +42,7 @@ function addIdsToFile({ filePath, config }) {
   }, { scope: {} });
 
   // generate new ast back in JSX
-  const options = {
-    retainLines: true,
-    comments: true,
-  }
+  const options = { retainLines: true, comments: true };
   const output = generator(ast, options, code).code;
 
   // write new JSX to file

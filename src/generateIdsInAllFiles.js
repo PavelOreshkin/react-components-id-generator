@@ -1,17 +1,18 @@
 const { addIdsToFile } = require("./addIdsToFile");
+const { print } = require("./print");
 
-function generateIdsInAllFiles({ files, parsedConfig }) {
+async function generateIdsInAllFiles({ files, parsedConfig }) {
   files.forEach(((filePath) => {
     if (!filePath) {
-      console.error("<paths> not found");
+      print("<paths> not found", "red")
       process.exit(1);
     }
     try {
       addIdsToFile({ filePath, config: parsedConfig });
-      console.log(`IDs added to file ${filePath}.`);
+      print("IDs added to file ${filePath}.", "green")
     } catch (error) {
-      console.error(`Error adding IDs to file ${filePath}:`, error);
-      process.exit(1);
+      print("Error adding IDs to file ${filePath}:", "red")
+      print(error)
     }
   }))
 }
