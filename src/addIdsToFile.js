@@ -45,9 +45,6 @@ function addIdsToFile({ filePath, config }) {
   const options = {
     retainLines: true,
     comments: true,
-    sourceType: 'module',
-    concise: false,
-    plugins: ['jsx'],
   }
   const output = generator(ast, options, code).code;
 
