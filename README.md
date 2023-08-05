@@ -30,10 +30,10 @@ _Result component:_
 
 # Documentation
 
-1. [Package Installation](#Installation)
-1. [Creating Configuration](#Configuration)
-1. [Adding Script to package.json](#RunCommand)
-1. [Example](#Example)
+1. [Package Installation](#installation)
+1. [Creating Configuration](#configuration)
+1. [Adding Script to package.json](#run-command)
+1. [Example](#example)
 
 
 # Installation
