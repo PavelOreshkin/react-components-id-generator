@@ -26,14 +26,14 @@ function addIdsToFile({ filePath, config }) {
         if (rule.tag && typeof rule.tag === 'string') {
           if (tagName === rule.tag) {
             const newId = repacerByPattern({ pattern: rule.pattern });
-            setId({ attributes, idName: config.id_name, newId })
+            setId({ action: config.action, attributes, idName: config.id_name, newId })
           }
         }
         if (rule.tag && Array.isArray(rule.tag) && rule.tag.length !== 0) {
           rule.tag.forEach((tag) => {
             if (tagName === tag) {
               const newId = repacerByPattern({ pattern: rule.pattern });
-              setId({ attributes, idName: config.id_name, newId })
+              setId({ action: config.action, attributes, idName: config.id_name, newId })
             }
           })
         }

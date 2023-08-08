@@ -6,6 +6,7 @@
     "react-components-id-generator": "./bin/react-components-id-generator"
   },
   "scripts": {
+    "version": "npm version",
     "publish": "npm publish"
   },
   "keywords": [

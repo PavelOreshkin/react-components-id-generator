@@ -1,7 +1,7 @@
 # react-component-id-generator [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/main/LICENSE) 
 
 This package will help simplify the interaction between the programmer and the automated tester.
-Thanks to it, we can flexibly generate IDs so that the tester can easily locate elements on the web page.
+Thanks to it, we can flexibly generate IDs in **all over the project at once**, so that the tester can easily locate elements on the web page.
 
 The package works with React components with `.tsx` and `.jsx` extensions.
 
@@ -68,13 +68,15 @@ Creating a JSON file with a custom name, for example "generator.config.json" in 
 ## Description
 
 ### General:
-| Key       | Type                | Description|
-| :---:     | :---:               | --- |
-| `id_name` | string              | name of the generated ID |
-| `paths`   | string[]            | array of paths to the components where the generation needs to be performed, and it also works with folders |
-| `rules`   | {tag, pattern}[]    | rules Rules for generating the ID string |
-| `tag`     | string \| string[]  | tag name of the element to which the pattern will be applied. |
-| `pattern` | string              | pattern according to which the string will be generated. |
+| Key       | Type                                                               | Description|
+| :---:     | :---:                                                              | --- |
+| `id_name` | string                                                             | name of the generated ID |
+| `action`  | "delete" \| "create" \| "update" \| "createAndUpdate" \| undefined | optional value ("_createAndUpdate_" is default value) <br> **create** - creates new IDs for those that do not have them (does not update existing ones) <br> **update** - updates existing IDs (does not create new ones) <br> **delete** - delete all IDs matching with 'id_name" <br> **createAndUpdate** - creates and updates IDs
+| `paths`   | string[]                                                           | array of paths to the components where the generation needs to be performed, and it also works with folders |
+| `rules`   | {tag, pattern}[]                                                   | rules Rules for generating the ID string |
+| `tag`     | string \| string[]                                                 | tag name of the element to which the pattern will be applied. |
+| `pattern` | string                                                             | pattern according to which the string will be generated. |
+
 ### Patterns:
 | Key                | Description|
 | :---:              | --- |

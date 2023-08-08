@@ -1,17 +1,25 @@
 const { addIdsToFile } = require("./addIdsToFile");
 const { print } = require("./print");
 
-async function generateIdsInAllFiles({ files, parsedConfig }) {
+const textMessegeByAction = (action) => {
+  if (action === 'delete') return 'deleting from';
+  if (action === 'create') return 'creating in';
+  if (action === 'update') return 'updating in';
+  if (action === 'createAndUpdate') return 'creating and updating in';
+  return 'creating and updating in';
+}
+
+async function generateIdsInAllFiles({ files, config }) {
   files.forEach(((filePath) => {
     if (!filePath) {
       print("<paths> not found", "red")
       process.exit(1);
     }
     try {
-      addIdsToFile({ filePath, config: parsedConfig });
-      print(`IDs added to file ${filePath}.`, "green")
+      addIdsToFile({ filePath, config });
+      print(`IDs ${textMessegeByAction(config?.action)} file ${filePath}.`, "green")
     } catch (error) {
-      print(`Error adding IDs to file ${filePath}:`, "red")
+      print(`Error during IDs ${textMessegeByAction(config?.action)} file ${filePath}:`, "red")
       print(error)
     }
   }))
