@@ -71,7 +71,7 @@ Creating a JSON file with a custom name, for example "generator.config.json" in 
 | Key       | Type                                                               | Description|
 | :---:     | :---:                                                              | --- |
 | `id_name` | string                                                             | name of the generated ID |
-| `action`  | "delete" \| "onlyCreate" \| "onlyUpdate" \| "createAndUpdate" \| undefined | optional value ("_createAndUpdate_" is default value) <br> **create** - creates new IDs for those that do not have them (does not update existing ones) <br> **update** - updates existing IDs (does not create new ones) <br> **delete** - delete all IDs matching with 'id_name" <br> **createAndUpdate** - creates and updates IDs
+| `action`  | "delete" <br /> "onlyCreate" <br /> "onlyUpdate" <br /> "createAndUpdate" <br /> undefined | this is optional value ("_createAndUpdate_" by default) <br> **create** - creates new IDs for those that do not have them (does not update existing ones) <br> **update** - updates existing IDs (does not create new ones) <br> **delete** - delete all IDs matching with 'id_name" <br> **createAndUpdate** - creates and updates IDs
 | `paths`   | string[]                                                           | array of paths to the components where the generation needs to be performed, and it also works with folders |
 | `rules`   | {tag, pattern}[]                                                   | rules Rules for generating the ID string |
 | `tag`     | string \| string[]                                                 | tag name of the element to which the pattern will be applied. |
@@ -81,10 +81,27 @@ Creating a JSON file with a custom name, for example "generator.config.json" in 
 | Key                | Description|
 | :---:              | --- |
 | `${fileName}`      | file name |
-| `${componentName}` | component name (currently, if the component is anonymous, the value will be null). |
+| `${componentName}` | component name (currently, if the component is anonymous, the value will be `undefined`). |
 | `${tagName}`       | tag name |
-| `${attr:onClick}`  | value of any specified attribute from the tag.In this example, it is "onClick". (currently, if the tag does not have the specified attribute, the value will be undefined). |
+| `${attr:onClick}`  | value of any specified attribute from the tag.In this example, it is "onClick". (currently, if the tag does not have the specified attribute, the value will be `undefined`). |
 
+#### Calculated values
+You can also use `someTextBefore__${fileName | componentName}__someTextAfter` construction
+The first valid value will be selected
+
+| values             | result |
+| ---                | :---: |
+| fileName = MyFileName.tsx <br /> componentName = MyComponentName | `someTextBefore__MyFileName__someTextAfter` |
+| fileName = MyFileName.tsx <br /> componentName = undefined | `someTextBefore__MyFileName__someTextAfter` |
+| fileName = undefined <br /> componentName = MyComponentName | `someTextBefore__MyComponentName__someTextAfter` |
+| fileName = undefined <br /> componentName = undefined | `someTextBefore__undefined__someTextAfter` |
+
+You can also set a default value by surrounding the value with quotes: `someTextBefore__${fileName | "defaultString"}__someTextAfter`
+
+| values             | result |
+| ---                | :---: |
+| fileName = MyFileName.tsx | `someTextBefore__MyFileName__someTextAfter` |
+| fileName = undefined  | `someTextBefore__defaultString__someTextAfter` |
 
 # Run Command
 
