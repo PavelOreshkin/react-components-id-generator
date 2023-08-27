@@ -10,5 +10,5 @@ const parsedConfig = parseConfig();
 const files = findFilePathsByExtensions(parsedConfig.paths, ['.tsx', '.jsx'])
 
 // write ids in every file
-generateIdsInAllFiles({ files, parsedConfig })
+generateIdsInAllFiles({ files, config: parsedConfig })
   .finally(() => process.exit())
