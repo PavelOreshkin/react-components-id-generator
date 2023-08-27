@@ -71,7 +71,7 @@ Creating a JSON file with a custom name, for example "generator.config.json" in 
 | Key       | Type                                                               | Description|
 | :---:     | :---:                                                              | --- |
 | `id_name` | string                                                             | name of the generated ID |
-| `action`  | "delete" \| "create" \| "update" \| "createAndUpdate" \| undefined | optional value ("_createAndUpdate_" is default value) <br> **create** - creates new IDs for those that do not have them (does not update existing ones) <br> **update** - updates existing IDs (does not create new ones) <br> **delete** - delete all IDs matching with 'id_name" <br> **createAndUpdate** - creates and updates IDs
+| `action`  | "delete" \| "onlyCreate" \| "onlyUpdate" \| "createAndUpdate" \| undefined | optional value ("_createAndUpdate_" is default value) <br> **create** - creates new IDs for those that do not have them (does not update existing ones) <br> **update** - updates existing IDs (does not create new ones) <br> **delete** - delete all IDs matching with 'id_name" <br> **createAndUpdate** - creates and updates IDs
 | `paths`   | string[]                                                           | array of paths to the components where the generation needs to be performed, and it also works with folders |
 | `rules`   | {tag, pattern}[]                                                   | rules Rules for generating the ID string |
 | `tag`     | string \| string[]                                                 | tag name of the element to which the pattern will be applied. |
@@ -80,6 +80,7 @@ Creating a JSON file with a custom name, for example "generator.config.json" in 
 ### Patterns:
 | Key                | Description|
 | :---:              | --- |
+| `${fileName}`      | file name |
 | `${componentName}` | component name (currently, if the component is anonymous, the value will be null). |
 | `${tagName}`       | tag name |
 | `${attr:onClick}`  | value of any specified attribute from the tag.In this example, it is "onClick". (currently, if the tag does not have the specified attribute, the value will be undefined). |

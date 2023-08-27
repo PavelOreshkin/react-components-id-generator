@@ -3,8 +3,8 @@ const { print } = require("./print");
 
 const textMessegeByAction = (action) => {
   if (action === 'delete') return 'deleting from';
-  if (action === 'create') return 'creating in';
-  if (action === 'update') return 'updating in';
+  if (action === 'onlyCreate') return 'creating in';
+  if (action === 'onlyUpdate') return 'updating in';
   if (action === 'createAndUpdate') return 'creating and updating in';
   return 'creating and updating in';
 }

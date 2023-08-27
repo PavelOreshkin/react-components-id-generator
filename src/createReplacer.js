@@ -1,4 +1,4 @@
-const createReplacer = ({ componentName, tagName, parsedAttr }) => ({ pattern }) => {
+const createReplacer = ({ fileName, componentName, tagName, parsedAttr }) => ({ pattern }) => {
   const regex = /\$\{([^}]+)\}/g;
   return pattern.replace(regex, (match, capture) => {
 
@@ -8,6 +8,8 @@ const createReplacer = ({ componentName, tagName, parsedAttr }) => ({ pattern })
     }
 
     switch (capture) {
+      case 'fileName':
+        return fileName;
       case 'componentName':
         return componentName;
       case 'tagName':

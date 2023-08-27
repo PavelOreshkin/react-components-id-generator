@@ -34,10 +34,10 @@ function setId({ action, attributes, idName, newId }) {
     },
   }
 
-  if (action === 'create') {
+  if (action === 'onlyCreate') {
     return createId({ attributes, attributeIndex, newAttr });
   }
-  if (action === 'update') {
+  if (action === 'onlyUpdate') {
     return updateId({ attributes, attributeIndex, newAttr });
   }
   if (action === 'createAndUpdate') {
