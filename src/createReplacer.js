@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 const checkIsStringInsideQuotes = (string) => {
   if ((string.startsWith('"') && string.endsWith('"')) ||
       (string.startsWith("'") && string.endsWith("'"))) {
@@ -28,6 +30,8 @@ const createReplacer = ({ fileName, componentName, tagName, parsedAttr }) => ({ 
           return componentName;
         case 'tagName':
           return tagName;
+        case 'uuid':
+          return uuidv4();
         default:
           return undefined;
       }

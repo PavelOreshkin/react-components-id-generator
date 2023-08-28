@@ -84,6 +84,7 @@ Creating a JSON file with a custom name, for example "generator.config.json" in 
 | `${componentName}` | component name (currently, if the component is anonymous, the value will be `undefined`). |
 | `${tagName}`       | tag name |
 | `${attr:onClick}`  | value of any specified attribute from the tag.In this example, it is "onClick". (currently, if the tag does not have the specified attribute, the value will be `undefined`). |
+| `${uuid}`          | a version 4 (random) UUID ([documentation](https://www.npmjs.com/package/uuid)) |
 
 #### Calculated values
 You can also use `someTextBefore__${fileName | componentName}__someTextAfter` construction
