@@ -21,6 +21,7 @@
   "author": "Pavel Oreshkin",
   "license": "MIT",
   "dependencies": {
+    "uuid": "^9.0.0",
     "@babel/generator": "^7.22.9",
     "@babel/parser": "^7.22.7",
     "@babel/traverse": "^7.22.8"
