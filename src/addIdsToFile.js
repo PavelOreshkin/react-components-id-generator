@@ -43,7 +43,15 @@ function addIdsToFile({ filePath, config }) {
   }, { scope: {} });
 
   // generate new ast back in JSX
-  const options = { retainLines: true, comments: true };
+  const options = {
+    retainLines: true,
+    comments: true,
+    /**
+     * the next line is needed to fix the compilation of non-Latin characters
+     * without it, "你好" will be compiled into "\u4F60\u597D"
+     */
+    jsescOption: { minimal: true }
+  };
   const output = generator(ast, options, code).code;
 
   // write new JSX to file
