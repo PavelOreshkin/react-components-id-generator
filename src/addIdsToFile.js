@@ -18,7 +18,7 @@ function addIdsToFile({ filePath, config }) {
   traverse(ast, {
     JSXOpeningElement(path) {
       const { attributes } = path.node || {};
-      const fileName = filePath.match(/\/([^/]+)\.\w+$/)[1]
+      const fileName = filePath.match(/[\\\/]+([^\\\/]+)\.\w+$/)[1]
       const tagName = path.node.name.name;
       const parsedAttr = parseAttributes(attributes)
       const repacerByPattern = createReplacer({ fileName, componentName, tagName, parsedAttr });
