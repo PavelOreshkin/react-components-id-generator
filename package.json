@@ -2,6 +2,14 @@
   "name": "react-components-id-generator",
   "version": "1.4.3",
   "description": "package for generating IDs by config to help with auto testing",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PavelOreshkin/react-components-id-generator"
+  },
+  "bugs": {
+    "url": "https://github.com/PavelOreshkin/react-components-id-generator/issues"
+  },
+  "homepage": "https://github.com/PavelOreshkin/react-components-id-generator#readme",
   "bin": {
     "react-components-id-generator": "./bin/react-components-id-generator"
   },
