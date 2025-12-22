@@ -1,4 +1,4 @@
-function parseAttributes(attributes) {
+function parseAttributes(attributes, spaceReplacer) {
   return attributes.reduce((result, attr) => {
     const name = attr?.name?.name;
     let value = "";

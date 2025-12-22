@@ -25,7 +25,7 @@ function addIdsToFile({ filePath, config }) {
         const { attributes } = path.node || {};
         const fileName = filePath.match(/[\\\/]+([^\\\/]+)\.\w+$/)[1];
         const tagName = path.node.name.name;
-        const parsedAttr = parseAttributes(attributes, config.space_replacer);
+        const parsedAttr = parseAttributes(attributes, config?.space_replacer);
 
         const replacerByPattern = createReplacer({
           fileName,
