@@ -1,6 +1,6 @@
 {
   "name": "react-components-id-generator",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "package for generating IDs by config to help with auto testing",
   "repository": {
     "type": "git",
