@@ -14,7 +14,7 @@ const createReplacer =
   ({ fileName, componentName, tagName, parsedAttr }) =>
   ({ pattern }) => {
     const regex = /\$\{([^}]+)\}/g;
-    return pattern.replace(regex, (match, string) => {
+    return pattern.replace(regex, (_match, string) => {
       const parameters = string.replace(/\s/g, "").split("|");
 
       const transformedParameters = parameters.map((item) => {
@@ -41,7 +41,7 @@ const createReplacer =
         }
       });
 
-      return transformedParameters.filter((item) => item)[0];
+      return transformedParameters.find((item) => item);
     });
   };
 
