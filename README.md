@@ -1,4 +1,4 @@
-# react-component-id-generator [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/main/LICENSE) 
+# react-component-id-generator [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/main/LICENSE)
 
 This package will help simplify the interaction between the programmer and the automated tester.
 Thanks to it, we can flexibly generate IDs in **all over the project at once**, so that the tester can easily locate elements on the web page.
@@ -8,11 +8,13 @@ The package works with React components with `.tsx` and `.jsx` extensions.
 The result of the work will be the following changes:
 
 _Initial component:_
+
 ```jsx
 <button onClick={handleCancle}>cancel</button>
 ```
 
 _Config:_
+
 ```json
 "rules": [
   {
@@ -23,10 +25,15 @@ _Config:_
 ```
 
 _Result component:_
-```jsx
-<button onClick={handleCancle} data_test-id="YourComponentName_button_handleCancle_someTex">cancel</button>
-```
 
+```jsx
+<button
+  onClick={handleCancle}
+  data_test-id="YourComponentName_button_handleCancle_someTex"
+>
+  cancel
+</button>
+```
 
 # Documentation
 
@@ -34,7 +41,6 @@ _Result component:_
 1. [Creating Configuration](#configuration)
 1. [Adding Script to package.json](#run-command)
 1. [Example](#example)
-
 
 # Installation
 
@@ -45,7 +51,6 @@ npm i --save-dev react-components-id-generator
 ```bash
 yarn add -D react-components-id-generator
 ```
-
 
 # Configuration
 
@@ -62,66 +67,71 @@ Creating a JSON file with a custom name, for example "generator.config.json" in 
     }
   ]
 }
-
 ```
 
 ## Description
 
 ### General:
-| Key       | Type                                                               | Description|
-| :---:     | :---:                                                              | --- |
-| `id_name` | string                                                             | name of the generated ID |
-| `action`  | "delete" <br /> "onlyCreate" <br /> "onlyUpdate" <br /> "createAndUpdate" <br /> undefined | this is optional value ("_createAndUpdate_" by default) <br> **create** - creates new IDs for those that do not have them (does not update existing ones) <br> **update** - updates existing IDs (does not create new ones) <br> **delete** - delete all IDs matching with 'id_name" <br> **createAndUpdate** - creates and updates IDs
-| `paths`   | string[]                                                           | array of paths to the components where the generation needs to be performed, and it also works with folders |
-| `rules`   | {tag, pattern}[]                                                   | rules Rules for generating the ID string |
-| `tag`     | string \| string[]                                                 | tag name of the element to which the pattern will be applied. |
-| `pattern` | string                                                             | pattern according to which the string will be generated. |
+
+|         Key         |                                            Type                                            | Description                                                                                                                                                                                                                                                                                                                             |
+| :-----------------: | :----------------------------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|      `id_name`      |                                           string                                           | name of the generated ID (global default). Can be overridden per rule                                                                                                                                                                                                                                                                   |
+|      `action`       | "delete" <br /> "onlyCreate" <br /> "onlyUpdate" <br /> "createAndUpdate" <br /> undefined | this is optional value ("_createAndUpdate_" by default) <br> **create** - creates new IDs for those that do not have them (does not update existing ones) <br> **update** - updates existing IDs (does not create new ones) <br> **delete** - delete all IDs matching with 'id_name" <br> **createAndUpdate** - creates and updates IDs |
+|       `paths`       |                                          string[]                                          | array of paths to the components where the generation needs to be performed, and it also works with folders                                                                                                                                                                                                                             |
+|       `rules`       |                                 {tag, pattern, id_name?}[]                                 | rules Rules for generating the ID string                                                                                                                                                                                                                                                                                                |
+|        `tag`        |                                     string \| string[]                                     | tag name of the element to which the pattern will be applied.                                                                                                                                                                                                                                                                           |
+|      `pattern`      |                                           string                                           | pattern according to which the string will be generated.                                                                                                                                                                                                                                                                                |
+| `id_name` (in rule) |                                     string (optional)                                      | name of the generated ID for this specific rule. If not specified, uses the global `id_name` from config. Useful for wrapper components that use camelCase props (e.g., `dataQa`) instead of kebab-case attributes (e.g., `data-qa`).                                                                                                   |
 
 ### Patterns:
-| Key                | Description|
-| :---:              | --- |
-| `${fileName}`      | file name |
-| `${componentName}` | component name (currently, if the component is anonymous, the value will be `undefined`). |
-| `${tagName}`       | tag name |
+
+|        Key         | Description                                                                                                                                                                   |
+| :----------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|   `${fileName}`    | file name                                                                                                                                                                     |
+| `${componentName}` | component name (currently, if the component is anonymous, the value will be `undefined`).                                                                                     |
+|    `${tagName}`    | tag name                                                                                                                                                                      |
 | `${attr:onClick}`  | value of any specified attribute from the tag.In this example, it is "onClick". (currently, if the tag does not have the specified attribute, the value will be `undefined`). |
-| `${uuid}`          | a version 4 (random) UUID ([documentation](https://www.npmjs.com/package/uuid)) |
+|     `${uuid}`      | a version 4 (random) UUID ([documentation](https://www.npmjs.com/package/uuid))                                                                                               |
 
 #### Calculated values
+
 You can also use `someTextBefore__${fileName | componentName}__someTextAfter` construction
 The first valid value will be selected
 
-| values             | result |
-| ---                | :---: |
-| fileName = MyFileName.tsx <br /> componentName = MyComponentName | `someTextBefore__MyFileName__someTextAfter` |
-| fileName = MyFileName.tsx <br /> componentName = undefined | `someTextBefore__MyFileName__someTextAfter` |
-| fileName = undefined <br /> componentName = MyComponentName | `someTextBefore__MyComponentName__someTextAfter` |
-| fileName = undefined <br /> componentName = undefined | `someTextBefore__undefined__someTextAfter` |
+| values                                                           |                      result                      |
+| ---------------------------------------------------------------- | :----------------------------------------------: |
+| fileName = MyFileName.tsx <br /> componentName = MyComponentName |   `someTextBefore__MyFileName__someTextAfter`    |
+| fileName = MyFileName.tsx <br /> componentName = undefined       |   `someTextBefore__MyFileName__someTextAfter`    |
+| fileName = undefined <br /> componentName = MyComponentName      | `someTextBefore__MyComponentName__someTextAfter` |
+| fileName = undefined <br /> componentName = undefined            |    `someTextBefore__undefined__someTextAfter`    |
 
 You can also set a default value by surrounding the value with quotes: `someTextBefore__${fileName | "defaultString"}__someTextAfter`
 
-| values             | result |
-| ---                | :---: |
-| fileName = MyFileName.tsx | `someTextBefore__MyFileName__someTextAfter` |
-| fileName = undefined  | `someTextBefore__defaultString__someTextAfter` |
+| values                    |                     result                     |
+| ------------------------- | :--------------------------------------------: |
+| fileName = MyFileName.tsx |  `someTextBefore__MyFileName__someTextAfter`   |
+| fileName = undefined      | `someTextBefore__defaultString__someTextAfter` |
 
 # Run Command
 
 In your package.json, add the following command to the "scripts" section:
+
 ```json
 "comand_name": "npx react-components-id-generator --config [path to our config]"
 ```
 
 If your config file is at the same level as the package.json, the command will look like this:
+
 ```json
 "generate_ids": "npx react-components-id-generator --config generator.config.json"
 ```
 
 > [!NOTE]
 > As Babel compiles the React component differently than intended ([issue](https://github.com/babel/babel/issues/10674)), recommended combining the generation process with the “eslint” command in your project:
+>
 > ```json
 > "generate_ids": "npx react-components-id-generator --config generator.config.json && eslint --fix ./src"
 > ```
-
 
 # Example
 
@@ -132,8 +142,8 @@ Besides the standard HTML tags, the component also uses other components. Here's
 
 ```jsx
 const CreateUserForm = () => {
-  const handleCancle = () => console.log('cancel');
-  const handleCreate = () => console.log('create');
+  const handleCancle = () => console.log("cancel");
+  const handleCreate = () => console.log("create");
 
   return (
     <>
@@ -164,7 +174,6 @@ const CreateUserForm = () => {
 ```
 
 We need to verify the proper functioning of links, the correctness of field input, and button operations. Other layout elements like `h1` or `div` are not of interest to us.
-
 
 ## Creating Configuration
 
@@ -203,7 +212,6 @@ As a result, our configuration looks like this:
 
 You may notice that in the `a` tag pattern, an arbitrary string `"link"` is used instead of `${tagName}`, as it may be simpler to understand.
 
-
 ## Creating the Run Command
 
 Following the advice given, don't forget to add [eslint](https://eslint.org/) at the end of the command line.
@@ -211,7 +219,6 @@ Following the advice given, don't forget to add [eslint](https://eslint.org/) at
 ```json
 "generate_ids": "npx react-components-id-generator --config generator.config.json && eslint --fix ./src"
 ```
-
 
 ## Generation Result
 
@@ -238,33 +245,141 @@ As a result, our component will look like this:
 
 ```jsx
 const CreateUserForm = () => {
-  const handleCancle = () => console.log('cancel');
-  const handleCreate = () => console.log('create');
+  const handleCancle = () => console.log("cancel");
+  const handleCreate = () => console.log("create");
 
   return (
     <>
       <h1>Create User Form</h1>
 
-      <a href="http.com" target="_blank" data_test-id="CreateUserForm_link_http.com">
+      <a
+        href="http.com"
+        target="_blank"
+        data_test-id="CreateUserForm_link_http.com"
+      >
         check our web site
       </a>
 
       <div className="personInfo">
-        <input type="text" name="firstName" data_test-id="CreateUserForm_input_firstName" />
-        <input type="text" name="lastName" data_test-id="CreateUserForm_input_lastName" />
-        <input type="text" name="phoneNumber" data_test-id="CreateUserForm_input_phoneNumber" />
-        <input type="email" name="email" data_test-id="CreateUserForm_input_email" />
-        <input type="password" name="password" data_test-id="CreateUserForm_input_password" />
-        <CustomInput name="power" data_test-id="CreateUserForm_CustomInput_power" />
+        <input
+          type="text"
+          name="firstName"
+          data_test-id="CreateUserForm_input_firstName"
+        />
+        <input
+          type="text"
+          name="lastName"
+          data_test-id="CreateUserForm_input_lastName"
+        />
+        <input
+          type="text"
+          name="phoneNumber"
+          data_test-id="CreateUserForm_input_phoneNumber"
+        />
+        <input
+          type="email"
+          name="email"
+          data_test-id="CreateUserForm_input_email"
+        />
+        <input
+          type="password"
+          name="password"
+          data_test-id="CreateUserForm_input_password"
+        />
+        <CustomInput
+          name="power"
+          data_test-id="CreateUserForm_CustomInput_power"
+        />
       </div>
 
-      <CustomComponent customProp="anyString" data_test-id="CreateUserForm_CustomComponent_anyString" />
+      <CustomComponent
+        customProp="anyString"
+        data_test-id="CreateUserForm_CustomComponent_anyString"
+      />
 
       <div className="controls">
-        <button onClick={handleCancle} data_test-id="CreateUserForm_button_handleCancle">cancel</button>
-        <CustomButton onClick={handleCreate} data_test-id="CreateUserForm_CustomButton_handleCreate">create</CustomButton>
+        <button
+          onClick={handleCancle}
+          data_test-id="CreateUserForm_button_handleCancle"
+        >
+          cancel
+        </button>
+        <CustomButton
+          onClick={handleCreate}
+          data_test-id="CreateUserForm_CustomButton_handleCreate"
+        >
+          create
+        </CustomButton>
       </div>
     </>
   );
 };
+```
+
+## Corner cases:
+
+### 1. Props problem
+
+For example you have parent component:
+
+```js
+const ButtonWrapper = ({ dataQa, children, ...rest }) => {
+  return (
+    <button data-qa={dataQa} {...rest}>
+      {children}
+    </button>
+  );
+};
+```
+
+And it using:
+
+```js
+<ButtonWrapper onClick={handleCreateSomething}>text</ButtonWrapper>
+```
+
+You want to save `data-qa={dataQa}` string and get id by props, and your props camelCase format.
+
+#### Solution
+
+We use this config with `id_name` in rule
+
+```json
+{
+  "id_name": "data_qa",
+  "paths": ["./src/components"],
+  "rules": [
+    {
+      "tag": "ButtonWrapper",
+      "pattern": "${componentName}_${tagName}_${attr:onClick}_wrapper",
+      "id_name": "dataQa"
+      // use id_name in rule (as props name) that overwrite global id_name
+    }
+  ]
+}
+```
+
+In the result you will have:
+
+This component wouldn't change. `data-qa` wouldn't update because package seeing that you have variable.
+
+```js
+const ButtonWrapper = ({ dataQa, children, ...rest }) => {
+  return (
+    <button data-qa={dataQa} {...rest}>
+      {children}
+    </button>
+  );
+};
+```
+
+But this component will change how we need. How you see we have `dataQa` from local rule instead global `data_qa`
+
+```js
+<ButtonWrapper
+  onClick={handleCreateSomething}
+  dataQa="YourComponentName_ButtonWrapper_handleCreateSomething_wrapper"
+>
+  text
+</ButtonWrapper>
 ```
