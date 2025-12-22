@@ -26,7 +26,7 @@ function addIdsToFile({ filePath, config }) {
         const fileName = filePath.match(/[\\\/]+([^\\\/]+)\.\w+$/)[1];
         const tagName = path.node.name.name;
         const parsedAttr = parseAttributes(attributes);
-        const repacerByPattern = createReplacer({
+        const replacerByPattern = createReplacer({
           fileName,
           componentName,
           tagName,
@@ -38,14 +38,14 @@ function addIdsToFile({ filePath, config }) {
 
           if (rule.tag && typeof rule.tag === "string") {
             if (tagName === rule.tag) {
-              const newId = repacerByPattern({ pattern: rule.pattern });
+              const newId = replacerByPattern({ pattern: rule.pattern });
               setId({ action: config.action, attributes, idName, newId });
             }
           }
           if (rule.tag && Array.isArray(rule.tag) && rule.tag.length !== 0) {
             rule.tag.forEach((tag) => {
               if (tagName === tag) {
-                const newId = repacerByPattern({ pattern: rule.pattern });
+                const newId = replacerByPattern({ pattern: rule.pattern });
                 setId({ action: config.action, attributes, idName, newId });
               }
             });

@@ -7,8 +7,11 @@ const createId = ({ attributes, attributeIndex, newAttr }) => {
 };
 
 const updateId = ({ attributes, attributeIndex, newAttr }) => {
-  // If the existing attribute has a JSXExpressionContainer value (e.g., data-qa={dataQa}),
-  // don't update it - preserve the variable reference
+  /**
+   * If the existing attribute has a JSXExpressionContainer value
+   * (e.g. data-qa={dataQa}),
+   * don't update it - preserve the variable reference
+   */
   if (attributes?.[attributeIndex]?.value?.type === "JSXExpressionContainer") {
     return;
   }
@@ -42,15 +45,31 @@ function setId({ action, attributes, idName, newId }) {
   };
 
   if (action === "onlyCreate") {
-    return createId({ attributes, attributeIndex, newAttr });
+    return createId({
+      attributes,
+      attributeIndex,
+      newAttr,
+    });
   }
   if (action === "onlyUpdate") {
-    return updateId({ attributes, attributeIndex, newAttr });
+    return updateId({
+      attributes,
+      attributeIndex,
+      newAttr,
+    });
   }
   if (action === "createAndUpdate") {
-    return createAndUpdate({ attributes, attributeIndex, newAttr });
+    return createAndUpdate({
+      attributes,
+      attributeIndex,
+      newAttr,
+    });
   }
-  return createAndUpdate({ attributes, attributeIndex, newAttr });
+  return createAndUpdate({
+    attributes,
+    attributeIndex,
+    newAttr,
+  });
 }
 
 module.exports = { setId };

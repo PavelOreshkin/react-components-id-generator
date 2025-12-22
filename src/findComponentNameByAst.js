@@ -1,11 +1,11 @@
-const traverse = require('@babel/traverse').default;
+const traverse = require("@babel/traverse").default;
 
 const findComponentNameByAst = (ast) => {
   let componentName = null;
 
   traverse(ast, {
     ExportDefaultDeclaration(path) {
-      const declaration = path.get('declaration');
+      const declaration = path.get("declaration");
       if (declaration.isIdentifier()) {
         componentName = declaration?.node?.name;
       } else if (declaration.isFunctionDeclaration()) {
@@ -15,7 +15,7 @@ const findComponentNameByAst = (ast) => {
       }
     },
     ExportNamedDeclaration(path) {
-      const declaration = path.get('declaration');
+      const declaration = path.get("declaration");
       if (declaration.isFunctionDeclaration()) {
         componentName = declaration?.node?.id?.name;
       } else if (declaration.isClassDeclaration()) {
@@ -24,7 +24,7 @@ const findComponentNameByAst = (ast) => {
     },
   });
 
-  return componentName
-}
+  return componentName;
+};
 
 module.exports = { findComponentNameByAst };

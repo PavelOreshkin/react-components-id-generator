@@ -17,7 +17,9 @@
     "major": "npm version major",
     "minor": "npm version minor",
     "patch": "npm version patch",
-    "publish": "npm publish"
+    "publish": "npm publish",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "keywords": [
     "react",
@@ -33,5 +35,8 @@
     "@babel/generator": "^7.22.9",
     "@babel/parser": "^7.22.7",
     "@babel/traverse": "^7.22.8"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4"
   }
 }
