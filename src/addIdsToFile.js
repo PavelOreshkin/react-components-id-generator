@@ -5,6 +5,7 @@ const traverse = require("@babel/traverse").default;
 const { findComponentNameByAst } = require("../src/findComponentNameByAst");
 const { createReplacer } = require("../src/createReplacer");
 const { parseAttributes } = require("../src/parseAttributes");
+const { findTagName } = require("../src/findTagName");
 const { setId } = require("../src/setId");
 
 function addIdsToFile({ filePath, config }) {
@@ -24,7 +25,7 @@ function addIdsToFile({ filePath, config }) {
       JSXOpeningElement(path) {
         const { attributes } = path.node || {};
         const fileName = filePath.match(/[\\\/]+([^\\\/]+)\.\w+$/)[1];
-        const tagName = path.node.name.name;
+        const tagName = findTagName(path);
         const parsedAttr = parseAttributes(attributes, config?.space_replacer);
 
         const replacerByPattern = createReplacer({
